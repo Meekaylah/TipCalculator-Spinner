@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Tip Calculator 2.0</string>
+    <string name="text_bill">Enter Bill Amount:</string>
+    <string name="editText_hint"> </string>
+    <string-array name="percentages">
+        <item>None</item>
+        <item>10%</item>
+        <item>15%</item>
+        <item>20%</item>
+    </string-array>
+    <string name="text_tip">The amount tip is:</string>
+</resources>
