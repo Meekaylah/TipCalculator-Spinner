@@ -1,6 +1,8 @@
 package com.example.tipcalculator20;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -20,6 +22,7 @@ import java.text.DecimalFormat;
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     EditText editTextBillAmount;
+    EditText editTextPeople;
     TextView textViewTipAmount;
     Spinner spinner;
     DecimalFormat df = new DecimalFormat("￡####.00");
@@ -36,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         });
 
         editTextBillAmount = findViewById(R.id.editTextText);
+        editTextPeople = findViewById(R.id.editTextText2);
         textViewTipAmount = findViewById(R.id.textView3);
         spinner = findViewById(R.id.spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout.
@@ -51,6 +55,26 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         spinner.setAdapter(adapter);
 
         spinner.setOnItemSelectedListener(this);
+
+        editTextPeople.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+                if (!editTextPeople.getText().toString().isEmpty()) {
+                    String tipAmount = textViewTipAmount.getText().toString().replace("￡", "").trim();
+                    int person = Integer.parseInt(editTextPeople.getText().toString().trim());
+                    if (!tipAmount.isEmpty()) {
+                        textViewTipAmount.setText(df.format(Double.parseDouble
+                                (String.valueOf(Float.parseFloat(tipAmount) / person))));
+                    }
+                } else {
+                    textViewTipAmount.setVisibility(TextView.GONE);
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        });
     }
 
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
